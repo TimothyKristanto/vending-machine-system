@@ -83,7 +83,7 @@ def display_changes(returned_notes):
   if returned_notes != None:
     print("Changes Notes:")
     for key, value in returned_notes.items():
-      print("* " + str(key) + " " + str(value) + "x")
+      print("* Rp " + str(key) + " " + str(value) + "x")
       total_change += key * value
     print("===============================")
   print("Your total change: Rp " + str(total_change))
