@@ -1,6 +1,15 @@
 drinks = ["Coke", "Mineral Water", "Sparkling Water", "Orange Juice", "Milk"]
 drink_prices = [6000, 2000, 16000, 15000, 10000] # drinks pricelist
 notes = [100000, 50000, 20000, 10000, 5000, 2000, 1000] # available notes
+notes_limitation = {
+  1000: 20, # 19
+  2000: 1,
+  5000: 2,
+  10000: 2,
+  20000: 2,
+  50000: 2,
+  100000: 2
+}
 
 # display the vending machine menu and catch the user input regarding to his chosen drink
 def display_vending_machine_menu():
@@ -60,15 +69,23 @@ def count_changes(drink_price, user_money):
   note_id = 0
   if change != 0:
     while True:
-      change -= notes[note_id]
+      note = notes[note_id]
+      change -= note
       if change < 0:
-        change += notes[note_id]
+        change += note
         note_id += 1
       elif change >= 0:
-        if returned_notes.get(notes[note_id]) is None:
-          returned_notes[notes[note_id]] = 1
+        notes_left = notes_limitation[note]
+
+        if notes_left > 0:
+          if returned_notes.get(note) is None:
+            returned_notes[note] = 1
+          else:
+            returned_notes[note] += 1
+          notes_limitation[note] -= 1
         else:
-          returned_notes[notes[note_id]] += 1
+          change += note
+          note_id += 1
       if change == 0:
         break
 
